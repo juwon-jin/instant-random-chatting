@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:textSize="40px"
+        android:textColor="#ff5bb111"
+        android:layout_height="50px"/>
+    <TextView
+        android:id="@+id/mobno"
+        android:layout_width="match_parent"
+        android:textSize="30px"
+        android:textColor="#8904B1"
+        android:layout_height="50px"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/total_connect_time_mark"
+            android:layout_width="wrap_content"
+            android:textSize="30px"
+            android:textColor="#000000"
+            android:text="총 접속시간(초) : "
+            android:layout_height="50px"/>
+        <TextView
+            android:id="@+id/total_connect_time"
+            android:layout_width="wrap_content"
+            android:textSize="30px"
+            android:textColor="#000000"
+            android:layout_height="50px" />
+    </LinearLayout>
+
+
+</LinearLayout>
