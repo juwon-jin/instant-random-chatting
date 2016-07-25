@@ -34,4 +34,4 @@ O - 13. CMS (Admin Page) -> Admin account information(mobile number : 0 / passwo
 
 
 + Demonstration Video
-(https://youtu.be/Mx9Sp7iw_Ew)
+(https://youtu.be/NzCeTt7glIw)
