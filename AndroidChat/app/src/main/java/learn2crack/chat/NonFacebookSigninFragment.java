@@ -53,6 +53,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class NonFacebookSigninFragment extends Fragment {
@@ -74,7 +75,7 @@ public class NonFacebookSigninFragment extends Fragment {
     String tempEmail;
     String tempName;
     String tempGender;
-    String tempBirthday;
+    String tempAge;
 
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
         @Override
@@ -89,24 +90,33 @@ public class NonFacebookSigninFragment extends Fragment {
                         public void onCompleted(JSONObject object, GraphResponse response) {
                             // Application code
                             Log.v("LoginActivity", response.toString());
-                            Log.e("aaa", object.optString("birthday"));
                             Log.e("aaa", AccessToken.getCurrentAccessToken().getUserId().toString());
 
                             //info.setText("id : " + tempLoginResult.getAccessToken().getUserId());
                             info.setText("email : " + object.optString("email"));
                             info.append("\nname : " + object.optString("name"));
                             info.append("\ngender : " + object.optString("gender"));
-                            info.append("\nbirthday : " + object.optString("birthday"));
+
+                            Log.e("aaa",""+ response.getJSONObject());
+
+                            /*
+                            try {
+                                info.append("\nage range : " + object.getString("age range"));
+                            }catch (Exception ex){
+                                ex.printStackTrace();
+                            }
+                            info.append("\nage range : " + object.optString("age range"));
+                            */
                             info.append("\n\n위와 같이, 페이스북 정보를 받을 수 있으나 사용하지않습니다. \n본 서비스를 이용하시려면 \"Not a member\"를 클릭해주세요.");
 
                             tempEmail = object.optString("email");
                             tempName = object.optString("name");
                             tempGender = object.optString("gender");
-                            tempBirthday = object.optString("birthday");
+                           //tempAge = object.optString("age_range");
                         }
                     });
             Bundle parameters = new Bundle();
-            parameters.putString("fields", "id,name,email,gender,birthday");
+            parameters.putString("fields", "id,name,email,gender");
             request.setParameters(parameters);
             request.executeAsync();
 
@@ -205,7 +215,7 @@ public class NonFacebookSigninFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         LoginButton loginButton = (LoginButton)view.findViewById(R.id.facebook_login_button);
-        loginButton.setReadPermissions("public_profile", "user_friends");
+        loginButton.setReadPermissions("public_profile", "user_friends","email");
         loginButton.setFragment(this);
         loginButton.registerCallback(callbackManager, callback);
     }

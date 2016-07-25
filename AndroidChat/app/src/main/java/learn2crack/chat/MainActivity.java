@@ -60,21 +60,27 @@ public class MainActivity extends Activity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = getApplicationContext();
         prefs = getSharedPreferences("Chat", 0);
-        context = getApplicationContext();
+        if(checkPlayServices()){
+            new Register().execute();
+
+        }
+
+        //getKeyHash(getApplicationContext());
         if(!prefs.getString("REG_FROM","").isEmpty()){ // mobno
-            Fragment user = new NonFacebookSigninFragment();
+           Fragment user = new NonFacebookSigninFragment();
+           // Fragment user = new UserFragment();
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.replace(R.id.content_frame, user);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.addToBackStack(null);
             ft.commit();
-        }
-        else  if(!prefs.getString("REG_ID", "").isEmpty()){ // reg_id
+        }else if(!prefs.getString("REG_ID", "").isEmpty()){ // reg_id
+            Toast.makeText(getApplicationContext(),"reg2",Toast.LENGTH_SHORT).show();
             Fragment reg = new NonFacebookSigninFragment();
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.replace(R.id.content_frame, reg);
@@ -82,14 +88,35 @@ public class MainActivity extends Activity {
             ft.addToBackStack(null);
             ft.commit();
 
-        }else if(checkPlayServices()){
-
+        }
+        else if(checkPlayServices()){
             new Register().execute();
 
         }else{
             Toast.makeText(getApplicationContext(),"This device is not supported",Toast.LENGTH_SHORT).show();
         }
     }
+/*
+    public static final String getKeyHash(Context context) {
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(),
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String keyHash = Base64.encodeToString(md.digest(), Base64.DEFAULT);
+                Log.d("KeyHash: ", keyHash);
+                return keyHash;
+            }
+
+        } catch (PackageManager.NameNotFoundException e) {
+           // Log.d(TAG + "getKeyHash Error:%s", e.getMessage());
+        } catch (NoSuchAlgorithmException e) {
+            //Log.d(TAG + "getKeyHash Error:%s", e.getMessage());
+        }
+        return "";
+    }
+*/
     private boolean checkPlayServices() {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         if (resultCode != ConnectionResult.SUCCESS) {

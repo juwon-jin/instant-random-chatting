@@ -119,6 +119,7 @@ public class NonFacebookSignupFragment extends Fragment {
             params.add(new BasicNameValuePair("mobno", ET_mobno.getText().toString()));
             params.add(new BasicNameValuePair("password", ET_password.getText().toString()));
             params.add((new BasicNameValuePair("reg_id",prefs.getString("REG_ID",""))));
+            Log.d("Asfd6", "reg_id : " + prefs.getString("REG_ID",""));
             Log.d("Asfd6", "Asfd1");
             //앱 설치했던 시각 start
             long first_install_moment = 0;

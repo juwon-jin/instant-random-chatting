@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import java.net.URLDecoder;
 
 
 public class MSGService extends IntentService {
@@ -36,9 +37,19 @@ public class MSGService extends IntentService {
         String messageType = gcm.getMessageType(intent);
         prefs = getSharedPreferences("Chat", 0);
 
+        String msg = "";
+        String fromu = "";
+        String name = "";
+
 
         if (!extras.isEmpty()) {
-
+            try{
+                msg = URLDecoder.decode(extras.getString("msg"), "UTF-8");
+                fromu = URLDecoder.decode(extras.getString("fromu"), "UTF-8");
+                name = URLDecoder.decode(extras.getString("name"), "UTF-8");
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
             if (GoogleCloudMessaging.
                     MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
                 Log.e("L2C","Error");
@@ -52,7 +63,8 @@ public class MSGService extends IntentService {
 
                 //if(!prefs.getString("CURRENT_ACTIVE","").equals(extras.getString("fromu"))) {
                 if(prefs.getString("CURRENT_ACTIVE","").equals(extras.getString("fromu"))) {
-                    sendNotification(extras.getString("msg"), extras.getString("fromu"), extras.getString("name"));
+
+                    sendNotification(msg, fromu, name);
                 }
                 Log.i("TAG", "Received: " + extras.getString("msg"));
             }
@@ -75,7 +87,7 @@ public class MSGService extends IntentService {
         notification.setContentTitle(name);
         notification.setContentText(msg);
         notification.setTicker("New Message !");
-        notification.setSmallIcon(R.drawable.ic_launcher);
+        notification.setSmallIcon(R.drawable.ic_action_name);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 1000,
                 chat, PendingIntent.FLAG_CANCEL_CURRENT);

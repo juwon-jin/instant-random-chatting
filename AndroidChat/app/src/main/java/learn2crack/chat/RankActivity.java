@@ -17,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -56,7 +57,12 @@ public class RankActivity extends Activity {
                 JSONObject c = null;
                 try {
                     c = json.getJSONObject(i);
-                    String name = c.getString("name");
+                    String name = "";
+                    try {
+                        name = URLDecoder.decode(c.getString("name"), "UTF-8");
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
                     String mobno = c.getString("mobno");
                     String total_connect_time = c.getString("total_connect_time");
                     HashMap<String, String> map = new HashMap<String, String>();
