@@ -24,7 +24,7 @@ O - 8. Cloud(AWS)
 
 O - 9. Rank by Connect Time
 
-X - 10. RESTFUL API
+O - 10. Restful API
 
 O - 11. Push 
 
